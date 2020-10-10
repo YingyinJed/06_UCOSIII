@@ -26,7 +26,9 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include "key.h"
 #include "ILI93xx.h"	//LCD头文件
+#include "sram.h"
 
 /* USER CODE END Includes */
 
@@ -59,6 +61,23 @@ void SystemClock_Config(void);
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
 
+//重定向printf到串口1
+#if 1
+#include <stdio.h>
+
+int fputc(int ch, FILE *stream)
+{
+    /* 堵塞判断串口是否发送完成 */
+    while((USART1->SR & 0X40) == 0);
+
+    /* 串口发送完成，将该字符发送 */
+    USART1->DR = (uint8_t) ch;
+
+    return ch;
+}
+#endif
+
+
 /* USER CODE END 0 */
 
 /**
@@ -68,7 +87,6 @@ void SystemClock_Config(void);
 int main(void)
 {
   /* USER CODE BEGIN 1 */
-
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -94,14 +112,16 @@ int main(void)
   MX_TIM7_Init();
   /* USER CODE BEGIN 2 */
 	TFTLCD_Init();		//初始化LCD
-	LCD_Clear(BLUE);
-	LCD_ShowString(30,40,210,24,24,"MY name is YYJed!");
+	LCD_Clear(WHITE);
+	LCD_ShowString(30,10,210,24,24,"MY name is YYJed!");
+	
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+		
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */

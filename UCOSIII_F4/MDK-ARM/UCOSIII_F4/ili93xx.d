@@ -31,6 +31,8 @@ ucosiii_f4\ili93xx.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_sram.h
 ucosiii_f4\ili93xx.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_fsmc.h
 ucosiii_f4\ili93xx.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr.h
 ucosiii_f4\ili93xx.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h
+ucosiii_f4\ili93xx.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h
+ucosiii_f4\ili93xx.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h
 ucosiii_f4\ili93xx.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h
 ucosiii_f4\ili93xx.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
 ucosiii_f4\ili93xx.o: ..\HARDWARE\LCD\font.h
