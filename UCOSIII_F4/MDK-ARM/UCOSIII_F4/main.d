@@ -42,4 +42,5 @@ ucosiii_f4\main.o: ..\HARDWARE\Delay\delay.h
 ucosiii_f4\main.o: ..\HARDWARE\LCD\ILI93xx.h
 ucosiii_f4\main.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
 ucosiii_f4\main.o: ..\HARDWARE\SRAM\sram.h
+ucosiii_f4\main.o: ..\HARDWARE\SRAM\MALLOC\malloc.h
 ucosiii_f4\main.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h

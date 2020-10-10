@@ -30,6 +30,7 @@
 "ucosiii_f4\delay.o"
 "ucosiii_f4\key.o"
 "ucosiii_f4\sram.o"
+"ucosiii_f4\malloc.o"
 --library_type=microlib --strict --scatter "UCOSIII_F4\UCOSIII_F4.sct"
 --summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
 --info sizes --info totals --info unused --info veneers

@@ -26,9 +26,10 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "key.h"
+#include "key.h"			//引用按键扫描相关函数
 #include "ILI93xx.h"	//LCD头文件
-#include "sram.h"
+#include "sram.h"			//引用外部内存读写相关函数
+#include "malloc.h"		//引用内存管理相关函数
 
 /* USER CODE END Includes */
 
@@ -112,6 +113,11 @@ int main(void)
   MX_TIM7_Init();
   /* USER CODE BEGIN 2 */
 	TFTLCD_Init();		//初始化LCD
+	
+	my_mem_init(SRAMIN);		//初始化内部内存池
+	my_mem_init(SRAMEX);		//初始化外部内存池
+	my_mem_init(SRAMCCM);		//初始化CCM内存池
+	
 	LCD_Clear(WHITE);
 	LCD_ShowString(30,10,210,24,24,"MY name is YYJed!");
 	
@@ -121,7 +127,7 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-		
+	
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
