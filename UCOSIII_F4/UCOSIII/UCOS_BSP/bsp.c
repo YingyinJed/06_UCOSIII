@@ -26,11 +26,7 @@
 
 CPU_INT32U  BSP_CPU_ClkFreq (void)
 {
-    RCC_ClocksTypeDef  rcc_clocks;
-
-    RCC_GetClocksFreq(&rcc_clocks);		//获取各个时钟频率
-
-    return ((CPU_INT32U)rcc_clocks.HCLK_Frequency);  //返回HCLK时钟频率
+    return HAL_RCC_GetHCLKFreq();
 }
 
 

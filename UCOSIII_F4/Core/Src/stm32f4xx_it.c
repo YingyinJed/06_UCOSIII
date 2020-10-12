@@ -168,7 +168,7 @@ void DebugMon_Handler(void)
 /**
   * @brief This function handles Pendable request for system service.
   */
-//void PendSV_Handler(void)
+//void OS_CPU_PendSVHandler(void)
 //{
 //  /* USER CODE BEGIN PendSV_IRQn 0 */
 
@@ -181,7 +181,7 @@ void DebugMon_Handler(void)
 ///**
 //  * @brief This function handles System tick timer.
 //  */
-//void SysTick_Handler(void)
+//void OS_SysTickHandler(void)
 //{
 //  /* USER CODE BEGIN SysTick_IRQn 0 */
 
