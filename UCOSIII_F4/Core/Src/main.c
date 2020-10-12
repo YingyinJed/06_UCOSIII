@@ -30,6 +30,7 @@
 #include "ILI93xx.h"	//LCD头文件
 #include "sram.h"			//引用外部内存读写相关函数
 #include "malloc.h"		//引用内存管理相关函数
+#include "stdio.h"
 
 #include "includes.h"
 #include "delay.h"
@@ -110,7 +111,20 @@ void SystemClock_Config(void);
 //重定向printf到串口1
 #if 1
 #include <stdio.h>
+#pragma import(__use_no_semihosting)             
+//标准库需要的支持函数                 
+struct __FILE 
+{ 
+	int handle; 
+}; 
 
+FILE __stdout;       
+//定义_sys_exit()以避免使用半主机模式    
+void _sys_exit(int x) 
+{ 
+	x = x; 
+} 
+//重定义fputc函数 
 int fputc(int ch, FILE *stream)
 {
     /* 堵塞判断串口是否发送完成 */
@@ -122,6 +136,7 @@ int fputc(int ch, FILE *stream)
     return ch;
 }
 #endif
+
 
 
 /* USER CODE END 0 */
@@ -325,7 +340,7 @@ void led0_task(void *p_arg)
 	{
 		HAL_GPIO_WritePin(LED_GREEN_GPIO_Port,LED_GREEN_Pin,GPIO_PIN_RESET);
 		OSTimeDlyHMSM(0,0,0,200,OS_OPT_TIME_HMSM_STRICT,&err); //延时200ms
-		HAL_GPIO_WritePin(LED_GREEN_GPIO_Port,LED_GREEN_Pin,GPIO_PIN_RESET);
+		HAL_GPIO_WritePin(LED_GREEN_GPIO_Port,LED_GREEN_Pin,GPIO_PIN_SET);
 		OSTimeDlyHMSM(0,0,0,500,OS_OPT_TIME_HMSM_STRICT,&err); //延时500ms
 	}
 }

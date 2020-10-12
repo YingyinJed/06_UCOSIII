@@ -1,7 +1,7 @@
 Dependencies for Project 'UCOSIII_F4', Target 'UCOSIII_F4': (DO NOT MODIFY !)
 CompilerVersion: 5060750::V5.06 update 6 (build 750)::.\ARMCC
-F (startup_stm32f407xx.s)(0x5F847D43)(--cpu Cortex-M4.fp.sp -g --apcs=interwork -I.\RTE\_UCOSIII_F4-IC:\Users\11057\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\Core\Include-IC:\Users\11057\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.13.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include--pd "__UVISION_VERSION SETA 531" --pd "_RTE_ SETA 1" --pd "STM32F407xx SETA 1" --pd "_RTE_ SETA 1"--list startup_stm32f407xx.lst --xref -o ucosiii_f4\startup_stm32f407xx.o --depend ucosiii_f4\startup_stm32f407xx.d)
-F (../Core/Src/main.c)(0x5F847A96)(--c99 -c --cpu Cortex-M4.fp.sp -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ..\HARDWARE\LCD -I ..\HARDWARE\KEY -I ..\HARDWARE\SRAM -I ..\HARDWARE\SRAM\MALLOC -I ..\HARDWARE\SYSTEM\delay -I ..\HARDWARE\SYSTEM\sys -I ..\HARDWARE\SYSTEM\usart -I ..\UCOSIII\uC-CPU -I ..\UCOSIII\uC-CPU\ARM-Cortex-M4\RealView -I ..\UCOSIII\uC-LIB -I ..\UCOSIII\UCOS_BSP -I ..\UCOSIII\uCOS_CONFIG -I ..\UCOSIII\uCOS-III\Source -I ..\UCOSIII\uCOS-III\Ports\ARM-Cortex-M4\Generic\RealView-I.\RTE\_UCOSIII_F4-IC:\Users\11057\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\Core\Include-IC:\Users\11057\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.13.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="531" -D_RTE_ -DSTM32F407xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F407xx-o ucosiii_f4\main.o --omf_browse ucosiii_f4\main.crf --depend ucosiii_f4\main.d)
+F (startup_stm32f407xx.s)(0x5F847FDB)(--cpu Cortex-M4.fp.sp -g --apcs=interwork -I.\RTE\_UCOSIII_F4-IC:\Users\11057\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\Core\Include-IC:\Users\11057\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.13.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include--pd "__UVISION_VERSION SETA 531" --pd "_RTE_ SETA 1" --pd "STM32F407xx SETA 1" --pd "_RTE_ SETA 1"--list startup_stm32f407xx.lst --xref -o ucosiii_f4\startup_stm32f407xx.o --depend ucosiii_f4\startup_stm32f407xx.d)
+F (../Core/Src/main.c)(0x5F8480C7)(--c99 -c --cpu Cortex-M4.fp.sp -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc -I ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I ../Drivers/CMSIS/Include -I ..\HARDWARE\LCD -I ..\HARDWARE\KEY -I ..\HARDWARE\SRAM -I ..\HARDWARE\SRAM\MALLOC -I ..\HARDWARE\SYSTEM\delay -I ..\HARDWARE\SYSTEM\sys -I ..\HARDWARE\SYSTEM\usart -I ..\UCOSIII\uC-CPU -I ..\UCOSIII\uC-CPU\ARM-Cortex-M4\RealView -I ..\UCOSIII\uC-LIB -I ..\UCOSIII\UCOS_BSP -I ..\UCOSIII\uCOS_CONFIG -I ..\UCOSIII\uCOS-III\Source -I ..\UCOSIII\uCOS-III\Ports\ARM-Cortex-M4\Generic\RealView-I.\RTE\_UCOSIII_F4-IC:\Users\11057\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\Core\Include-IC:\Users\11057\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.13.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="531" -D_RTE_ -DSTM32F407xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F407xx-o ucosiii_f4\main.o --omf_browse ucosiii_f4\main.crf --depend ucosiii_f4\main.d)
 I (../Core/Inc/main.h)(0x5F847A95)
 I (../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h)(0x5F7B19F3)
 I (../Core/Inc/stm32f4xx_hal_conf.h)(0x5F847A95)
@@ -46,8 +46,8 @@ I (..\HARDWARE\LCD\ILI93xx.h)(0x5F1FF818)
 I (C:\Keil_v5\ARM\ARMCC\include\stdlib.h)(0x5EC775FC)
 I (..\HARDWARE\SRAM\sram.h)(0x5F817ABD)
 I (..\HARDWARE\SRAM\MALLOC\malloc.h)(0x5F81844D)
-I (..\UCOSIII\uCOS_CONFIG\includes.h)(0x5469F03F)
 I (C:\Keil_v5\ARM\ARMCC\include\stdio.h)(0x5EC775FC)
+I (..\UCOSIII\uCOS_CONFIG\includes.h)(0x5469F03F)
 I (C:\Keil_v5\ARM\ARMCC\include\string.h)(0x5EC77604)
 I (C:\Keil_v5\ARM\ARMCC\include\ctype.h)(0x5EC77604)
 I (C:\Keil_v5\ARM\ARMCC\include\stdarg.h)(0x5EC775FC)
