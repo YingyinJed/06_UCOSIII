@@ -34,5 +34,5 @@ ucosiii_f4\key.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h
 ucosiii_f4\key.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h
 ucosiii_f4\key.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h
 ucosiii_f4\key.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h
-ucosiii_f4\key.o: ..\HARDWARE\Delay\delay.h
-ucosiii_f4\key.o: ../Core/Inc/tim.h
+ucosiii_f4\key.o: ..\HARDWARE\SYSTEM\delay\delay.h
+ucosiii_f4\key.o: ..\HARDWARE\SYSTEM\sys\sys.h

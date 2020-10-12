@@ -339,7 +339,7 @@
               <MiscControls></MiscControls>
               <Define>USE_HAL_DRIVER,STM32F407xx</Define>
               <Undefine></Undefine>
-              <IncludePath>../Core/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy;../Drivers/CMSIS/Device/ST/STM32F4xx/Include;../Drivers/CMSIS/Include;..\HARDWARE\LCD;..\HARDWARE\KEY;..\HARDWARE\Delay;..\HARDWARE\SRAM;..\HARDWARE\SRAM\MALLOC</IncludePath>
+              <IncludePath>../Core/Inc; ../Drivers/STM32F4xx_HAL_Driver/Inc; ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy; ../Drivers/CMSIS/Device/ST/STM32F4xx/Include; ../Drivers/CMSIS/Include; ..\HARDWARE\LCD; ..\HARDWARE\KEY; ..\HARDWARE\SRAM; ..\HARDWARE\SRAM\MALLOC; ..\HARDWARE\SYSTEM\delay; ..\HARDWARE\SYSTEM\sys; ..\HARDWARE\SYSTEM\usart; ..\UCOSIII\uC-CPU; ..\UCOSIII\uC-CPU\ARM-Cortex-M4\RealView; ..\UCOSIII\uC-LIB; ..\UCOSIII\UCOS_BSP; ..\UCOSIII\uCOS_CONFIG; ..\UCOSIII\uCOS-III\Source; ..\UCOSIII\uCOS-III\Ports\ARM-Cortex-M4\Generic\RealView</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -427,6 +427,11 @@
               <FileName>stm32f4xx_hal_msp.c</FileName>
               <FileType>1</FileType>
               <FilePath>../Core/Src/stm32f4xx_hal_msp.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f4xx_hal_timebase_tim.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../Core/Src/stm32f4xx_hal_timebase_tim.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -546,16 +551,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>Delay</GroupName>
-          <Files>
-            <File>
-              <FileName>delay.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\HARDWARE\Delay\delay.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>KEY</GroupName>
           <Files>
             <File>
@@ -577,6 +572,26 @@
               <FileName>malloc.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\HARDWARE\SRAM\MALLOC\malloc.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>SYSTEM</GroupName>
+          <Files>
+            <File>
+              <FileName>delay.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\HARDWARE\SYSTEM\delay\delay.c</FilePath>
+            </File>
+            <File>
+              <FileName>sys.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\HARDWARE\SYSTEM\sys\sys.c</FilePath>
+            </File>
+            <File>
+              <FileName>usart_X.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\HARDWARE\SYSTEM\usart\usart_X.c</FilePath>
             </File>
           </Files>
         </Group>
