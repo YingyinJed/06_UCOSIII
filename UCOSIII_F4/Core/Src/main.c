@@ -38,54 +38,75 @@
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
+
 /* USER CODE BEGIN PTD */
+/*----------------------灯等引脚的定义---------------------------*/
+#define LED_GREEN_H		HAL_GPIO_WritePin(LED_GREEN_GPIO_Port,LED_GREEN_Pin,GPIO_PIN_SET)
+#define LED_GREEN_L		HAL_GPIO_WritePin(LED_GREEN_GPIO_Port,LED_GREEN_Pin,GPIO_PIN_RESET)
+#define LED_GREEN_TO	HAL_GPIO_TogglePin(LED_GREEN_GPIO_Port,LED_GREEN_Pin)
+
+#define LED_RED_H		HAL_GPIO_WritePin(LED_RED_GPIO_Port,LED_RED_Pin,GPIO_PIN_SET)
+#define LED_RED_L		HAL_GPIO_WritePin(LED_RED_GPIO_Port,LED_RED_Pin,GPIO_PIN_RESET)
+#define LED_RED_TO	HAL_GPIO_TogglePin(LED_RED_GPIO_Port,LED_RED_Pin)
+
+//LCD刷屏时使用的颜色
+int lcd_discolor[14]={	WHITE, BLACK, BLUE,  BRED,      
+						GRED,  GBLUE, RED,   MAGENTA,       	 
+						GREEN, CYAN,  YELLOW,BROWN, 			
+						BRRED, GRAY };
+
+/*----------------------宏定义配置开始任务---------------------------*/
 //任务优先级
 #define START_TASK_PRIO		3
 //任务堆栈大小	
 #define START_STK_SIZE 		512
 //任务控制块
 OS_TCB StartTaskTCB;
-//任务堆栈	
+//任务堆栈,这里声明了任务堆栈名，任务大小早已设置过
 CPU_STK START_TASK_STK[START_STK_SIZE];
 //任务函数
 void start_task(void *p_arg);
 
+/*----------------------宏定义配置任务1---------------------------*/
 //任务优先级
-#define LED0_TASK_PRIO		4
+#define TASK1_TASK_PRIO		4
 //任务堆栈大小	
-#define LED0_STK_SIZE 		128
+#define TASK1_STK_SIZE 		128
 //任务控制块
-OS_TCB Led0TaskTCB;
+OS_TCB TASK1_TaskTCB;
 //任务堆栈	
-CPU_STK LED0_TASK_STK[LED0_STK_SIZE];
-void led0_task(void *p_arg);
+CPU_STK TASK1_TASK_STK[TASK1_STK_SIZE];
+void task1_task(void *p_arg);
 
+/*----------------------宏定义配置任务2---------------------------*/
 //任务优先级
-#define LED1_TASK_PRIO		5
+#define TASK2_TASK_PRIO		5
 //任务堆栈大小	
-#define LED1_STK_SIZE 		128
+#define TASK2_STK_SIZE 		128
 //任务控制块
-OS_TCB Led1TaskTCB;
+OS_TCB TASK2_TaskTCB;
 //任务堆栈	
-CPU_STK LED1_TASK_STK[LED1_STK_SIZE];
+CPU_STK TASK2_TASK_STK[TASK2_STK_SIZE];
 //任务函数
-void led1_task(void *p_arg);
+void task2_task(void *p_arg);
 
+/*----------------------宏定义配置任务3---------------------------*/
 //任务优先级
-#define FLOAT_TASK_PRIO		6
+#define TASK3_TASK_PRIO		6
 //任务堆栈大小
-#define FLOAT_STK_SIZE		128
+#define TASK3_STK_SIZE		128
 //任务控制块
-OS_TCB	FloatTaskTCB;
+OS_TCB	TASK3_TaskTCB;
 //任务堆栈
-__align(8) CPU_STK	FLOAT_TASK_STK[FLOAT_STK_SIZE];
+__align(8) CPU_STK	TASK3_TASK_STK[TASK3_STK_SIZE];
 //任务函数
-void float_task(void *p_arg);
+void task3_task(void *p_arg);
 
 /* USER CODE END PTD */
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
+
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -148,9 +169,9 @@ int fputc(int ch, FILE *stream)
 int main(void)
 {
   /* USER CODE BEGIN 1 */
-	OS_ERR err;
+	OS_ERR err;				//OS初始化的输入参数
 	CPU_SR_ALLOC();
-	delay_init(168);  //时钟初始化
+	delay_init(168);  //时钟初始化,同时也是为了UCOSIII的使用
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -186,22 +207,23 @@ int main(void)
 	
 	OSInit(&err);		//初始化UCOSIII
 	OS_CRITICAL_ENTER();//进入临界区
-	//创建开始任务
-	OSTaskCreate((OS_TCB 	* )&StartTaskTCB,		//任务控制块
-				 (CPU_CHAR	* )"start task", 		//任务名字
-                 (OS_TASK_PTR )start_task, 			//任务函数
-                 (void		* )0,					//传递给任务函数的参数
-                 (OS_PRIO	  )START_TASK_PRIO,     //任务优先级
-                 (CPU_STK   * )&START_TASK_STK[0],	//任务堆栈基地址
-                 (CPU_STK_SIZE)START_STK_SIZE/10,	//任务堆栈深度限位
-                 (CPU_STK_SIZE)START_STK_SIZE,		//任务堆栈大小
-                 (OS_MSG_QTY  )0,					//任务内部消息队列能够接收的最大消息数目,为0时禁止接收消息
-                 (OS_TICK	  )0,					//当使能时间片轮转时的时间片长度，为0时为默认长度，
-                 (void   	* )0,					//用户补充的存储区
-                 (OS_OPT      )OS_OPT_TASK_STK_CHK|OS_OPT_TASK_STK_CLR, //任务选项
-                 (OS_ERR 	* )&err);				//存放该函数错误时的返回值
-	OS_CRITICAL_EXIT();	//退出临界区	 
-	OSStart(&err);  //开启UCOSIII
+	/*----------------创建开始任务-------------------*/
+	OSTaskCreate(		(OS_TCB 	*  )	&StartTaskTCB,						//任务控制块
+									(CPU_CHAR	*  )	"start task", 						//任务名字
+									(OS_TASK_PTR )	start_task, 							//任务函数
+									(void		* 	 )			0,										//传递给任务函数的参数
+									(OS_PRIO	   )	START_TASK_PRIO,    			//任务优先级
+									(CPU_STK   * )	&START_TASK_STK[0],				//任务堆栈基地址
+									(CPU_STK_SIZE)	START_STK_SIZE/10,				//任务堆栈深度限位
+									(CPU_STK_SIZE)	START_STK_SIZE,						//任务堆栈大小
+									(OS_MSG_QTY  )			0,										//任务内部消息队列能够接收的最大消息数目,为0时禁止接收消息
+									(OS_TICK	   )			0,										//当使能时间片轮转时的时间片长度，为0时为默认长度，
+									(void   	*  )			0,										//用户补充的存储区
+									(OS_OPT      )	OS_OPT_TASK_STK_CHK|OS_OPT_TASK_STK_CLR, //任务选项:允许对任务进行堆栈检查，在创建任务时清除堆栈
+									(OS_ERR 	*  )		&err);									//存放该函数错误时的返回值		
+									
+										OS_CRITICAL_EXIT();											//退出临界区	 
+										OSStart(&err);  												//开启UCOSIII
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -261,7 +283,7 @@ void SystemClock_Config(void)
 
 /* USER CODE BEGIN 4 */
 
-//开始任务函数
+/*--------------配置开始任务函数----------------*/
 void start_task(void *p_arg)
 {
 	OS_ERR err;
@@ -283,82 +305,115 @@ void start_task(void *p_arg)
 #endif		
 	
 	OS_CRITICAL_ENTER();	//进入临界区
-	//创建LED0任务
-	OSTaskCreate((OS_TCB 	* )&Led0TaskTCB,		
-				 (CPU_CHAR	* )"led0 task", 		
-                 (OS_TASK_PTR )led0_task, 			
-                 (void		* )0,					
-                 (OS_PRIO	  )LED0_TASK_PRIO,     
-                 (CPU_STK   * )&LED0_TASK_STK[0],	
-                 (CPU_STK_SIZE)LED0_STK_SIZE/10,	
-                 (CPU_STK_SIZE)LED0_STK_SIZE,		
-                 (OS_MSG_QTY  )0,					
-                 (OS_TICK	  )0,					
-                 (void   	* )0,					
-                 (OS_OPT      )OS_OPT_TASK_STK_CHK|OS_OPT_TASK_STK_CLR,
-                 (OS_ERR 	* )&err);				
+	/*--------------------创建TASK1任务-----------------------*/
+	OSTaskCreate(	 (OS_TCB 	* 	)	&TASK1_TaskTCB,		
+								 (CPU_CHAR	* )	"task1 task", 		
+                 (OS_TASK_PTR )	task1_task, 			
+                 (void		* 	)	0,					
+                 (OS_PRIO	  	)	TASK1_TASK_PRIO,     
+                 (CPU_STK   * )	&TASK1_TASK_STK[0],	
+                 (CPU_STK_SIZE)	TASK1_STK_SIZE/10,	
+                 (CPU_STK_SIZE)	TASK1_STK_SIZE,		
+                 (OS_MSG_QTY  )	0,					
+                 (OS_TICK	  	)	0,					
+                 (void   	* 	)	0,					
+                 (OS_OPT      )	OS_OPT_TASK_STK_CHK|OS_OPT_TASK_STK_CLR,
+                 (OS_ERR 	* 	)	&err);				
 				 
-	//创建LED1任务
-	OSTaskCreate((OS_TCB 	* )&Led1TaskTCB,		
-				 (CPU_CHAR	* )"led1 task", 		
-                 (OS_TASK_PTR )led1_task, 			
-                 (void		* )0,					
-                 (OS_PRIO	  )LED1_TASK_PRIO,     	
-                 (CPU_STK   * )&LED1_TASK_STK[0],	
-                 (CPU_STK_SIZE)LED1_STK_SIZE/10,	
-                 (CPU_STK_SIZE)LED1_STK_SIZE,		
+	/*--------------------创建TASK2任务-----------------------*/
+	OSTaskCreate(	 (OS_TCB 	* 	)&TASK2_TaskTCB,		
+								 (CPU_CHAR	* )"task2 task", 		
+                 (OS_TASK_PTR )task2_task, 			
+                 (void		* 	)0,					
+                 (OS_PRIO	  	)TASK2_TASK_PRIO,     	
+                 (CPU_STK   * )&TASK2_TASK_STK[0],	
+                 (CPU_STK_SIZE)TASK2_STK_SIZE/10,	
+                 (CPU_STK_SIZE)TASK2_STK_SIZE,		
                  (OS_MSG_QTY  )0,					
-                 (OS_TICK	  )0,					
-                 (void   	* )0,				
+                 (OS_TICK	  	)0,					
+                 (void   	* 	)0,				
                  (OS_OPT      )OS_OPT_TASK_STK_CHK|OS_OPT_TASK_STK_CLR, 
-                 (OS_ERR 	* )&err);
+                 (OS_ERR 	* 	)&err);
 				 
-	//创建浮点测试任务
-	OSTaskCreate((OS_TCB 	* )&FloatTaskTCB,		
-				 (CPU_CHAR	* )"float test task", 		
-                 (OS_TASK_PTR )float_task, 			
-                 (void		* )0,					
-                 (OS_PRIO	  )FLOAT_TASK_PRIO,     	
-                 (CPU_STK   * )&FLOAT_TASK_STK[0],	
-                 (CPU_STK_SIZE)FLOAT_STK_SIZE/10,	
-                 (CPU_STK_SIZE)FLOAT_STK_SIZE,		
+	/*--------------------创建浮点型任务-----------------------*/
+	OSTaskCreate(	 (OS_TCB 	* 	)&TASK3_TaskTCB,		
+								 (CPU_CHAR	* )"float test task", 		
+                 (OS_TASK_PTR )task3_task, 			
+                 (void		* 	)0,					
+                 (OS_PRIO	  	)TASK3_TASK_PRIO,     	
+                 (CPU_STK   * )&TASK3_TASK_STK[0],	
+                 (CPU_STK_SIZE)TASK3_STK_SIZE/10,	
+                 (CPU_STK_SIZE)TASK3_STK_SIZE,		
                  (OS_MSG_QTY  )0,					
-                 (OS_TICK	  )0,					
-                 (void   	* )0,				
+                 (OS_TICK	  	)0,					
+                 (void   	* 	)0,				
                  (OS_OPT      )OS_OPT_TASK_STK_CHK|OS_OPT_TASK_STK_CLR, 
-                 (OS_ERR 	* )&err);				 
-	OS_TaskSuspend((OS_TCB*)&StartTaskTCB,&err);		//挂起开始任务			 
+                 (OS_ERR 	* 	)&err);	
+
+	/*--------------------挂起开始任务----------------------*/			 
+	OS_TaskSuspend((OS_TCB*)&StartTaskTCB,&err);			 
 	OS_CRITICAL_EXIT();	//进入临界区
 }
 
-//led0任务函数
-void led0_task(void *p_arg)
+	/*--------------------配置任务1函数--------------------*/
+void task1_task(void *p_arg)
 {
+	uint8_t task1_num=0;
 	OS_ERR err;
+	CPU_SR_ALLOC();
 	p_arg = p_arg;
+	
+	POINT_COLOR = BLACK;
+	OS_CRITICAL_ENTER();
+	LCD_DrawRectangle(5,110,115,314); 	//画一个矩形	
+	LCD_DrawLine(5,130,115,130);		//画线
+	POINT_COLOR = BLUE;
+	LCD_ShowString(6,111,110,16,16,"Task1 Run:000");
+	OS_CRITICAL_EXIT();
 	while(1)
 	{
-		HAL_GPIO_WritePin(LED_GREEN_GPIO_Port,LED_GREEN_Pin,GPIO_PIN_RESET);
-		OSTimeDlyHMSM(0,0,0,200,OS_OPT_TIME_HMSM_STRICT,&err); //延时200ms
-		HAL_GPIO_WritePin(LED_GREEN_GPIO_Port,LED_GREEN_Pin,GPIO_PIN_SET);
-		OSTimeDlyHMSM(0,0,0,500,OS_OPT_TIME_HMSM_STRICT,&err); //延时500ms
+		task1_num++;	//任务执1行次数加1 注意task1_num1加到255的时候会清零！！
+		LED_GREEN_TO;
+		printf("任务1已经执行：%d次\r\n",task1_num);
+		if(task1_num==5) 
+		{
+			OSTaskDel((OS_TCB*)&TASK1_TaskTCB,&err);	//任务1执行5此后删除掉任务2
+			printf("任务1删除了任务2!\r\n");
+		}
+		LCD_Fill(6,131,114,313,lcd_discolor[task1_num%14]); //填充区域
+		LCD_ShowxNum(86,111,task1_num,3,16,0x80);	//显示任务执行次数
+		OSTimeDlyHMSM(0,0,1,0,OS_OPT_TIME_HMSM_STRICT,&err); //延时1s
 	}
 }
 
-//led1任务函数
-void led1_task(void *p_arg)
+	/*--------------------配置任务2函数--------------------*/
+void task2_task(void *p_arg)
 {
+	uint8_t task2_num=0;
 	OS_ERR err;
+	CPU_SR_ALLOC();
 	p_arg = p_arg;
+	
+	POINT_COLOR = BLACK;
+	OS_CRITICAL_ENTER();
+	LCD_DrawRectangle(125,110,234,314); //画一个矩形	
+	LCD_DrawLine(125,130,234,130);		//画线
+	POINT_COLOR = BLUE;
+	LCD_ShowString(126,111,110,16,16,"Task2 Run:000");
+	OS_CRITICAL_EXIT();
 	while(1)
 	{
-		HAL_GPIO_TogglePin(LED_RED_GPIO_Port,LED_RED_Pin);
-		OSTimeDlyHMSM(0,0,0,500,OS_OPT_TIME_HMSM_STRICT,&err); //延时500ms
+		task2_num++;	//任务2执行次数加1 注意task1_num2加到255的时候会清零！！
+		LED_RED_TO;
+		printf("任务2已经执行：%d次\r\n",task2_num);
+		LCD_ShowxNum(206,111,task2_num,3,16,0x80);  //显示任务执行次数
+		LCD_Fill(126,131,233,313,lcd_discolor[13-task2_num%14]); //填充区域
+		OSTimeDlyHMSM(0,0,1,0,OS_OPT_TIME_HMSM_STRICT,&err); //延时1s
 	}
 }
 
-//浮点测试任务
-void float_task(void *p_arg)
+	/*--------------------配置任务3函数--------------------*/
+void task3_task(void *p_arg)
 {
 	CPU_SR_ALLOC();
 	static float float_num=0.01;
