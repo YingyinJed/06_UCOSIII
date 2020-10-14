@@ -307,7 +307,7 @@ void start_task(void *p_arg)
 	OS_CRITICAL_ENTER();	//进入临界区
 	/*--------------------创建TASK1任务-----------------------*/
 	OSTaskCreate(	 (OS_TCB 	* 	)	&TASK1_TaskTCB,		
-								 (CPU_CHAR	* )	"task1 task", 		
+								 (CPU_CHAR*	  )	"task1 task", 		
                  (OS_TASK_PTR )	task1_task, 			
                  (void		* 	)	0,					
                  (OS_PRIO	  	)	TASK1_TASK_PRIO,     
